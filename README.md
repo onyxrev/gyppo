@@ -1,4 +1,4 @@
-# Gyppo
+# Gyppo Server
 
 Simple AJAX file logging using [node.js](https://github.com/joyent/node) and [Winston](https://github.com/flatiron/winston/).
 
@@ -45,3 +45,27 @@ Winston will log some JSON like this:
 ## Troubleshooting
 
 Make sure your log file exists and is writable by the user you've specified in config.js
+
+# Gyppo Client
+The client library is totally optional.
+
+The intention of the Gyppo client library is to make it easy to track errors on the client and write them to the Gyppo backend.  It also produces some nice meta_data about the client including the user agent and the page and file that produced the error.
+
+## Configuration
+
+Include the gyppo-client.js script in your client code.
+
+Invoke the Gyppo library and pass in options to taste:
+> var logger = new Gyppo({ url: "/gyppo_server_url", default_level: "warn" });
+
+By default Gyppo will report all client errors to the Gyppo backend.  If you don't want that, pass log_errors: false when invoking the library.
+
+## Usage
+
+> logger.log.error("Oh noes");
+
+Will produce something like the following JSON in the logs:
+> {"ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11","href":"http://localhost:3000/evil_page.html","level":"error","message":"Oh noes","timestamp":"2012-11-17T13:38:39.964Z"}
+
+An automatically logged error will look something like:
+> {"ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11","href":"http://localhost:3000/evil_page.html","level":"error","message":"http://localhost:3000/foo.js:15\n\nUncaught ReferenceError: f is not defined","timestamp":"2012-11-17T13:38:39.964Z"}
