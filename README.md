@@ -10,6 +10,12 @@ Winston supports more transports than I need.  For now I've written this to just
 
 Change the defaults (port, user, log file location) in config.js to suit your needs.
 
+## Dependencies
+
+The only current dependency is Winston.  Install it with npm:
+
+npm install
+
 ## Usage
 
 Boot your server:
