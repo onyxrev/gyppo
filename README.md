@@ -47,7 +47,7 @@ Winston will log some JSON like this:
 Make sure your log file exists and is writable by the user you've specified in config.js
 
 # Gyppo Client
-The client library is totally optional.
+The client library is totally optional.  It has a jQuery dependency.
 
 The intention of the Gyppo client library is to make it easy to track errors on the client and write them to the Gyppo backend.  It also produces some nice meta_data about the client including the user agent and the page and file that produced the error.
 
