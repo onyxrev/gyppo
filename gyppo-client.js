@@ -61,12 +61,17 @@
             var logger = this.log = {};
 
             $.each(this.options.log_levels, function(i, level){
-                logger[level] = function(message){ instance.logToServer(level, message, instance.options.success, instance.options.error); };
+                logger[level] = function(message){
+                    instance.logToServer(level, message, instance.options.success, instance.options.error);
+                };
+
+                // index the levels for easy lookup
+                instance.log_levels_map[level] = i;
             });
         },
 
         logToServer: function(level, message, success, error){
-            if (this.options.log_levels.indexOf(level) < this.options.log_levels.indexOf(this.options.default_level)) return;
+            if (this.log_levels_map[level] < this.log_levels_map[this.options.default_level]) return;
 
             return $.ajax({
                 type: "POST",
