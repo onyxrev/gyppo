@@ -19,7 +19,7 @@ winston.add(winston.transports.File, { filename: config.log_file, timestamp: tru
 var server = http.createServer(function(req, res){
     // ensure we have a POST and that we have params
     helpers.postReq(req, res, function() {
-        winston.log(res.post.level || config.default_level, res.post.message);
+        winston.log(res.post.level || config.default_level, res.post.message, res.post.meta_data);
 
         // success!
         res.writeHead(204, {'Content-Type': 'text/plain'});

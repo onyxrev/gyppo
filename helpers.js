@@ -22,6 +22,7 @@ var helpers = {
 
             req.on('end', function() {
                 res.post = querystring.parse(queryData);
+                helpers.collateMetaData(res);
                 helpers.validateMessage(req, res, callback);
             });
 
@@ -38,6 +39,18 @@ var helpers = {
         // unprocessable / invalid
         res.writeHead(422, {'Content-Type': 'text/plain'});
         res.end();
+    },
+
+    // turns nested stringified params "meta_data[foo]": "bar" into
+    // meta_data: {foo: "bar"}
+    collateMetaData: function(res){
+        var subkey, key_extractor = /^meta_data\[(.+)\]$/
+        res.post.meta_data = Object.keys(res.post).reduce(function(obj, key){
+            if (subkey = key.match(key_extractor))
+                obj[subkey[1]] = res.post[key];
+
+            return obj;
+        }, {});
     }
 }
 
