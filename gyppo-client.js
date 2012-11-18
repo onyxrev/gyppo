@@ -59,6 +59,7 @@
         initLevels: function(){
             var instance = this;
             var logger = this.log = {};
+            this.log_levels_map   = {};
 
             $.each(this.options.log_levels, function(i, level){
                 logger[level] = function(message){
